@@ -1,20 +1,23 @@
-import type { Observable } from 'rxjs';
-import type { AnyStateMachine, InterpreterFrom, InterpreterOptions, Prop, StateFrom } from 'xstate';
+import { Observable } from 'rxjs';
+import { EventObject, StateConfig } from 'xstate';
 
 export type MaybeLazy<T> = T | (() => T);
 
-export type ComparatorFn<T> = (a: T, b: T) => boolean;
+export type Prop<T, K> = K extends keyof T ? T[K] : never;
 
-export type UseMachineOptions = InterpreterOptions & {
-  destroy$?: Observable<void>;
-};
+export interface UseMachineOptions<TContext, TEvent extends EventObject> {
+  /**
+   * Stops the interpreter and unsubscribe all listeners.
+   */
+  stop$?: Observable<void>;
 
-export type UseMachineReturn<
-  TMachine extends AnyStateMachine | ((...args: any[]) => AnyStateMachine),
-  TInterpreter = InterpreterFrom<TMachine>
-> = {
-  state$: Observable<StateFrom<TMachine>>;
-  send: Prop<TInterpreter, 'send'>;
-  service: TInterpreter;
-  select: <T>(selector: (state: StateFrom<TMachine>) => T, compare?: ComparatorFn<T>) => Observable<T>;
-};
+  /**
+   * If provided, will be merged with machine's `context`.
+   */
+  context?: Partial<TContext>;
+  /**
+   * The state to rehydrate the machine to. The machine will
+   * start at this state instead of its `initialState`.
+   */
+  state?: StateConfig<TContext, TEvent>;
+}
