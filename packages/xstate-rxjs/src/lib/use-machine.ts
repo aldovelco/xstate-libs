@@ -1,44 +1,60 @@
+import { Observable, Subject, takeUntil } from 'rxjs';
 import {
-  distinctUntilChanged,
-  filter,
-  finalize,
-  from,
-  map,
-  Observable,
-  shareReplay,
-  startWith,
-  Subject,
-  takeUntil,
-} from 'rxjs';
-import { AnyStateMachine, InterpreterFrom, Prop, StateFrom } from 'xstate';
-import { UseMachineOptions } from './types';
+  AnyStateMachine,
+  AreAllImplementationsAssumedToBeProvided,
+  InternalMachineOptions,
+  InterpreterFrom,
+  InterpreterOptions,
+  State,
+  StateFrom,
+} from 'xstate';
+import { fromInterpreter } from './from-interpreter';
+import { MaybeLazy, Prop, UseMachineOptions } from './types';
 import { useInterpret } from './use-interpret';
 
-export function useMachine<TMachine extends AnyStateMachine>(machine: TMachine, options?: UseMachineOptions) {
-  const { destroy$ = new Subject<void>(), ...interpreterOptions } = options ?? {};
-  const service = useInterpret(machine, interpreterOptions);
+// prettier-ignore
+type RestParams<
+  TMachine extends AnyStateMachine
+> = AreAllImplementationsAssumedToBeProvided<
+  TMachine['__TResolvedTypesMeta']
+> extends false
+  ? [
+      options: InterpreterOptions &
+        UseMachineOptions<TMachine['__TContext'], TMachine['__TEvent']> &
+        InternalMachineOptions<
+          TMachine['__TContext'],
+          TMachine['__TEvent'],
+          TMachine['__TResolvedTypesMeta'],
+          true
+        >
+    ]
+  : [
+      options?: InterpreterOptions &
+        UseMachineOptions<TMachine['__TContext'], TMachine['__TEvent']> &
+        InternalMachineOptions<
+          TMachine['__TContext'],
+          TMachine['__TEvent'],
+          TMachine['__TResolvedTypesMeta']
+        >
+    ];
 
-  const state$ = from(service).pipe(
-    filter((state) => state.changed || state.changed === undefined),
-    startWith(service.getSnapshot()),
-    shareReplay(1),
-    takeUntil(destroy$),
-    finalize(() => {
-      service.stop();
-    })
-  ) as Observable<StateFrom<TMachine>>;
+type UseMachineReturn<TMachine extends AnyStateMachine, TInterpreter = InterpreterFrom<TMachine>> = {
+  state$: Observable<StateFrom<TMachine>>;
+  send: Prop<TInterpreter, 'send'>;
+  service: TInterpreter;
+};
 
-  const send = service.send as Prop<InterpreterFrom<TMachine>, 'send'>;
+export function useMachine<TMachine extends AnyStateMachine>(
+  getMachine: MaybeLazy<TMachine>,
+  ...[options = {} as any]: RestParams<TMachine>
+): UseMachineReturn<TMachine> {
+  const { stop$ = new Subject<void>(), ...restOptions } = options;
+  const service = useInterpret(getMachine, { ...restOptions, stop$ });
 
-  const select = <T>(
-    selector: (emitted: StateFrom<TMachine>) => T,
-    comparator: (a: T, b: T) => boolean = (a, b) => a === b
-  ) => {
-    return state$.pipe(
-      map((state) => selector(state)),
-      distinctUntilChanged((previous, current) => comparator(previous, current))
-    );
-  };
+  const rehydratedState = options.state;
+  service.start(rehydratedState ? (State.create(rehydratedState) as any) : undefined);
 
-  return { state$, send, service, select };
+  const state$ = fromInterpreter(service).pipe(takeUntil(stop$));
+
+  return { state$, send: service.send, service } as any;
 }
