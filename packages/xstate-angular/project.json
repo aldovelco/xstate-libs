@@ -1,0 +1,47 @@
+{
+  "name": "xstate-angular",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/xstate-angular/src",
+  "prefix": "aldovelco",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/xstate-angular/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/xstate-angular/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/xstate-angular/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/xstate-angular/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/xstate-angular/**/*.ts", "packages/xstate-angular/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}
