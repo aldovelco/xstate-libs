@@ -2,11 +2,14 @@
   "name": "xstate-libs",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
   "private": true,
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "version": "changeset version",
+    "test": "npx nx run-many --target=test --exclude=angular-example"
+  },
   "devDependencies": {
     "@angular-devkit/build-angular": "~15.1.0",
     "@angular-eslint/eslint-plugin": "~15.0.0",
