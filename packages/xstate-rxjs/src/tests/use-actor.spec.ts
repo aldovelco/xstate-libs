@@ -1,14 +1,8 @@
 import { subscribeSpyTo } from '@hirez_io/observer-spy';
-import { BehaviorSubject, firstValueFrom, Subject, switchMap, take } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, switchMap, take } from 'rxjs';
 import { ActorRef, ActorRefFrom, createMachine, interpret, sendParent, toActorRef } from 'xstate';
 import { useActor } from '../lib/use-actor';
 import { useMachine } from '../lib/use-machine';
-
-const stop$ = new Subject<void>();
-
-afterAll(() => {
-  stop$.next();
-});
 
 describe('useActor composable function', () => {
   test('initial invoked actor should be immediately available', async () => {
@@ -39,7 +33,7 @@ describe('useActor composable function', () => {
       },
     });
 
-    const { service } = useMachine(machine, { stop$ });
+    const { service } = useMachine(machine);
     const actorRef = (service.getSnapshot().children as any).child as ActorRefFrom<typeof childMachine>;
 
     const actorState = await firstValueFrom(useActor(actorRef).state$);

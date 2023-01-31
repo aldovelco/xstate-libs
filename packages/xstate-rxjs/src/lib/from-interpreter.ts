@@ -1,4 +1,4 @@
-import { distinctUntilChanged, finalize, from, Observable, shareReplay } from 'rxjs';
+import { distinctUntilChanged, from, Observable, shareReplay } from 'rxjs';
 import { AnyStateMachine, InterpreterFrom, InterpreterStatus, StateFrom } from 'xstate';
 
 export function fromInterpreter<TMachine extends AnyStateMachine>(
@@ -21,10 +21,6 @@ export function fromInterpreter<TMachine extends AnyStateMachine>(
 
       return !(nextState.changed || initialStateChanged);
     }),
-    shareReplay(1),
-    finalize(() => {
-      service.stop();
-      service.status = InterpreterStatus.NotStarted;
-    })
+    shareReplay(1)
   ) as any;
 }

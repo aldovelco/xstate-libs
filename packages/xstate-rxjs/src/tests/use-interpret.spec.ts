@@ -1,4 +1,3 @@
-import { Subject } from 'rxjs';
 import { createMachine, StateFrom } from 'xstate';
 import { useInterpret } from '../lib/use-interpret';
 
@@ -19,16 +18,10 @@ const machine = createMachine({
   },
 });
 
-const stop$ = new Subject<void>();
-
-afterAll(() => {
-  stop$.next();
-});
-
 describe('useInterpret composable function', () => {
   test('observer should be called with initial state', async () => {
     let state: StateFrom<typeof machine>;
-    const service = useInterpret(machine, { stop$ }, (nextState) => {
+    const service = useInterpret(machine, {}, (nextState) => {
       state = nextState;
     });
 
@@ -37,7 +30,7 @@ describe('useInterpret composable function', () => {
 
   test('observer should be called with next state', async () => {
     let state: StateFrom<typeof machine>;
-    const service = useInterpret(machine, { stop$ }, (nextState) => {
+    const service = useInterpret(machine, {}, (nextState) => {
       state = nextState;
     });
 
