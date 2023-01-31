@@ -1,1 +1,23 @@
-<aldovelco-nx-welcome></aldovelco-nx-welcome>
+<div id="app">
+  <h1>XState Angular Template</h1>
+  <h2>Fork this template!</h2>
+
+  <button type="button" (click)="show = !show">
+    {{ show ? 'Hide children' : 'Show children' }}
+  </button>
+
+  <hr />
+
+  <p>Toggle Actor Input Component</p>
+  <ng-container *ngIf="toggleActor.state$ | async as state">
+    <app-toggle-actor-input
+      *ngIf="show"
+      [actor]="toggleActor"
+      [state]="state"
+      [send]="toggleActor.send"
+    ></app-toggle-actor-input>
+  </ng-container>
+
+  <p>Toggle Actor Component</p>
+  <app-toggle-actor *ngIf="show"></app-toggle-actor>
+</div>
