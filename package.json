@@ -7,8 +7,9 @@
     "packages/*"
   ],
   "scripts": {
-    "version": "changeset version",
-    "test": "npx nx run-many --target=test --exclude=angular-example"
+    "build": "npx nx run-many --target=build --exclude=angular-example,xstate-angular",
+    "test": "npx nx run-many --target=test --exclude=angular-example",
+    "version": "changeset version"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~15.1.0",
