@@ -8,7 +8,7 @@ export type CreateToggleMachine = typeof toggleMachine;
 
 export const toggleMachine = createMachine({
   predictableActionArguments: true,
-  tsTypes: {} as import("./toggle.machine.typegen").Typegen0,
+  tsTypes: {} as import('./toggle.machine.typegen').Typegen0,
   schema: {
     context: {} as ToggleMachineContext,
     events: {} as { type: 'TOGGLE' },

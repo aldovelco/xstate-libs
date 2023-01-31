@@ -1,21 +1,21 @@
 {
-  "name": "template-angular-ts",
+  "name": "angular-example",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "packages/template-angular-ts/src",
+  "sourceRoot": "apps/angular-example/src",
   "prefix": "aldovelco",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/template-angular-ts",
-        "index": "packages/template-angular-ts/src/index.html",
-        "main": "packages/template-angular-ts/src/main.ts",
+        "outputPath": "dist/apps/angular-example",
+        "index": "apps/angular-example/src/index.html",
+        "main": "apps/angular-example/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "packages/template-angular-ts/tsconfig.app.json",
-        "assets": ["packages/template-angular-ts/src/favicon.ico", "packages/template-angular-ts/src/assets"],
-        "styles": ["packages/template-angular-ts/src/styles.css"],
+        "tsConfig": "apps/angular-example/tsconfig.app.json",
+        "assets": ["apps/angular-example/src/favicon.ico", "apps/angular-example/src/assets"],
+        "styles": ["apps/angular-example/src/styles.css"],
         "scripts": []
       },
       "configurations": {
@@ -49,10 +49,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "template-angular-ts:build:production"
+          "browserTarget": "angular-example:build:production"
         },
         "development": {
-          "browserTarget": "template-angular-ts:build:development"
+          "browserTarget": "angular-example:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -60,21 +60,21 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "template-angular-ts:build"
+        "browserTarget": "angular-example:build"
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/template-angular-ts/**/*.ts", "packages/template-angular-ts/**/*.html"]
+        "lintFilePatterns": ["apps/angular-example/**/*.ts", "apps/angular-example/**/*.html"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/template-angular-ts/jest.config.ts",
+        "jestConfig": "apps/angular-example/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

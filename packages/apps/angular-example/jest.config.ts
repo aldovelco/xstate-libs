@@ -1,7 +1,7 @@
 /* eslint-disable */
 export default {
-  displayName: 'template-angular-ts',
-  preset: '../../jest.preset.js',
+  displayName: 'apps-angular-example',
+  preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
     'ts-jest': {
@@ -9,7 +9,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/packages/template-angular-ts',
+  coverageDirectory: '../../../coverage/packages/apps/angular-example',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
