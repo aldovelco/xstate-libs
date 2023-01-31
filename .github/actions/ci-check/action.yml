@@ -3,10 +3,10 @@ description: "Makes sure all packages are buildable"
 runs:
   using: "composite"
   steps:
-    - name: Build
-      run: npm run build
+    - name: Test
+      run: npm run test
       shell: bash
 
-    - name: Test
-      run: npm run test --silent
+    - name: Build
+      run: npm run build
       shell: bash
