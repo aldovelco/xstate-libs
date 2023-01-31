@@ -1,1 +1,3 @@
-export * from './lib/xstate-angular/xstate-angular.component';
+export * from './lib/destroy.service';
+export * from './lib/inject-machine';
+
