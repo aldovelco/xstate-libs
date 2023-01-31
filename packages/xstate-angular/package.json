@@ -1,10 +1,10 @@
 {
   "name": "@aldovelco/xstate-angular",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "peerDependencies": {
     "@angular/common": "^15.1.0",
     "@angular/core": "^15.1.0",
-    "@aldovelco/xstate-rxjs": "^0.0.2"
+    "@aldovelco/xstate-rxjs": "^0.0.3"
   },
   "dependencies": {
     "tslib": "^2.3.0"
