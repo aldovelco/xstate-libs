@@ -1,4 +1,4 @@
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { distinctUntilChanged, map, Observable } from 'rxjs';
 import {
   AnyStateMachine,
   AreAllImplementationsAssumedToBeProvided,
@@ -38,23 +38,37 @@ type RestParams<
         >
     ];
 
-type UseMachineReturn<TMachine extends AnyStateMachine, TInterpreter = InterpreterFrom<TMachine>> = {
+export type MachineRestParams<TMachine extends AnyStateMachine> = RestParams<TMachine>;
+
+export type UseMachineReturnType<TMachine extends AnyStateMachine, TInterpreter = InterpreterFrom<TMachine>> = {
+  service: TInterpreter;
   state$: Observable<StateFrom<TMachine>>;
   send: Prop<TInterpreter, 'send'>;
-  service: TInterpreter;
+  select: <T>(selector: (state: StateFrom<TMachine>) => T, comparator?: (a: T, b: T) => boolean) => Observable<T>;
 };
 
 export function useMachine<TMachine extends AnyStateMachine>(
   getMachine: MaybeLazy<TMachine>,
-  ...[options = {} as any]: RestParams<TMachine>
-): UseMachineReturn<TMachine> {
-  const { stop$ = new Subject<void>(), ...restOptions } = options;
-  const service = useInterpret(getMachine, { ...restOptions, stop$ });
+  ...[options = {}]: RestParams<TMachine>
+): UseMachineReturnType<TMachine> {
+  const service = useInterpret(getMachine, options);
 
   const rehydratedState = options.state;
   service.start(rehydratedState ? (State.create(rehydratedState) as any) : undefined);
 
-  const state$ = fromInterpreter(service).pipe(takeUntil(stop$));
+  const state$ = fromInterpreter(service);
+  const send = service.send as Prop<InterpreterFrom<TMachine>, 'send'>;
+  // TODO: Should we expose a select method directly?
+  const defaultComparator = (a: any, b: any) => a === b;
+  const select = <T>(
+    selector: (state: StateFrom<TMachine>) => T,
+    comparator: (a: T, b: T) => boolean = defaultComparator
+  ) => {
+    return state$.pipe(
+      map((value) => selector(value)),
+      distinctUntilChanged(comparator)
+    );
+  };
 
-  return { state$, send: service.send, service } as any;
+  return { service, state$, send, select };
 }

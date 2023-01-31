@@ -1,16 +1,12 @@
-import { Observable } from 'rxjs';
-import { EventObject, StateConfig } from 'xstate';
+import { AnyStateMachine, EventObject, InterpreterFrom, StateConfig } from 'xstate';
 
 export type MaybeLazy<T> = T | (() => T);
 
 export type Prop<T, K> = K extends keyof T ? T[K] : never;
 
-export interface UseMachineOptions<TContext, TEvent extends EventObject> {
-  /**
-   * Stops the interpreter and unsubscribe all listeners.
-   */
-  stop$?: Observable<void>;
+export type SendFrom<TMachine extends AnyStateMachine> = InterpreterFrom<TMachine>['send'];
 
+export interface UseMachineOptions<TContext, TEvent extends EventObject> {
   /**
    * If provided, will be merged with machine's `context`.
    */

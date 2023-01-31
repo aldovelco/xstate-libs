@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@aldovelco/xstate-angular": ["packages/xstate-angular/src/index.ts"],
       "@aldovelco/xstate-rxjs": ["packages/xstate-rxjs/src/index.ts"]
     }
   },

@@ -1,4 +1,3 @@
-import { Subject, takeUntil } from 'rxjs';
 import {
   AnyStateMachine,
   AreAllImplementationsAssumedToBeProvided,
@@ -48,12 +47,11 @@ type RestParams<
 
 export function useInterpret<TMachine extends AnyStateMachine>(
   getMachine: MaybeLazy<TMachine>,
-  ...[options = {} as any, observerOrListener]: RestParams<TMachine>
+  ...[options = {}, observerOrListener]: RestParams<TMachine>
 ): InterpreterFrom<TMachine> {
   const machine = typeof getMachine === 'function' ? getMachine() : getMachine;
 
   const {
-    stop$ = new Subject<void>(),
     context,
     guards,
     actions,
@@ -81,7 +79,7 @@ export function useInterpret<TMachine extends AnyStateMachine>(
   const service = interpret(machineWithConfig, interpreterOptions);
 
   if (observerOrListener) {
-    const state$ = fromInterpreter(service).pipe(takeUntil(stop$));
+    const state$ = fromInterpreter(service);
     state$.subscribe(toObserver(observerOrListener as any));
   }
 

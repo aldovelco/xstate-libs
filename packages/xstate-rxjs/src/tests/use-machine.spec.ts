@@ -1,13 +1,6 @@
-import { Subject } from 'rxjs';
 import { assign, createMachine, doneInvoke } from 'xstate';
 import { waitFor } from 'xstate/lib/waitFor';
 import { useMachine } from '../lib/use-machine';
-
-const stop$ = new Subject<void>();
-
-afterAll(() => {
-  stop$.next();
-});
 
 const context = {
   data: undefined,
@@ -45,7 +38,6 @@ describe('useMachine composition function', () => {
     const onFetch = () => new Promise((res) => setTimeout(() => res('some data'), 50));
 
     const { state$, send, service } = useMachine(fetchMachine, {
-      stop$,
       services: {
         fetchData: onFetch,
       },
@@ -64,7 +56,6 @@ describe('useMachine composition function', () => {
     const onFetch = () => new Promise((res) => setTimeout(() => res('some data'), 50));
 
     const { state$, send, service } = useMachine(fetchMachine, {
-      stop$,
       services: {
         fetchData: onFetch,
       },
