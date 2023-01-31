@@ -3,7 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/xstate-angular/src",
-  "prefix": "aldovelco",
+  "prefix": "xstate-angular",
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
