@@ -7,7 +7,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npx nx run-many --target=build --exclude=angular-example,xstate-angular",
+    "build": "npx nx run-many --target=build --exclude=angular-example",
     "test": "npx nx run-many --target=test --exclude=angular-example",
     "version": "changeset version"
   },
@@ -45,6 +45,7 @@
     "jest-preset-angular": "~12.2.3",
     "jsdom": "~20.0.3",
     "ng-packagr": "~15.1.0",
+    "np": "^7.6.3",
     "nx": "15.6.3",
     "postcss": "^8.4.5",
     "postcss-import": "~14.1.0",

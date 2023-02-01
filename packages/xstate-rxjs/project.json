@@ -14,7 +14,7 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "node tools/scripts/publish.mjs xstate-rxjs {args.ver} {args.tag}"
+        "command": "npx np --branch=main --contents={options.outputPath}"
       },
       "dependsOn": ["build"]
     },
