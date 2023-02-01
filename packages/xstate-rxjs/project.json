@@ -14,7 +14,11 @@
     "publish": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx np --branch=main --contents={options.outputPath}"
+        "parallel": false,
+        "commands": [
+          "npx changeset status --output=tmp/changeset.json",
+          "node tools/scripts/publish.mjs xstate-rxjs {args.tag}"
+        ]
       },
       "dependsOn": ["build"]
     },
