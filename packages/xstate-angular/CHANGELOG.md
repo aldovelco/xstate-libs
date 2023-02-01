@@ -1,5 +1,12 @@
 # @aldovelco/xstate-angular
 
+## 0.0.4
+
+### Patch Changes
+
+- Updated dependencies [[`ac8fbc3`](https://github.com/aldovelco/xstate-libs/commit/ac8fbc3a5ec0fd1de06aa503fa660d8b91be2fff)]:
+  - @aldovelco/xstate-rxjs@0.0.5
+
 ## 0.0.3
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @aldovelco/xstate-rxjs
 
+## 0.0.5
+
+### Patch Changes
+
+- [#9](https://github.com/aldovelco/xstate-libs/pull/9) [`ac8fbc3`](https://github.com/aldovelco/xstate-libs/commit/ac8fbc3a5ec0fd1de06aa503fa660d8b91be2fff) Thanks [@aldovelco](https://github.com/aldovelco)! - Updates rxjs and xstate peer dependencies
+
 ## 0.0.4
 
 ### Patch Changes
