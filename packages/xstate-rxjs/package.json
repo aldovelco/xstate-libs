@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "type": "commonjs",
   "peerDependencies": {
-    "rxjs": "7.x",
-    "xstate": "^4.35.3"
+    "rxjs": ">=7.x",
+    "xstate": ">=4.3.x"
   }
 }
