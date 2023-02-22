@@ -1,4 +1,4 @@
-import { Interpreter } from 'xstate';
+import { ActorRef, Interpreter } from 'xstate';
 
 export function getServiceSnapshot<TService extends Interpreter<any, any, any, any>>(
   service: TService
@@ -8,4 +8,18 @@ export function getServiceSnapshot<TService extends Interpreter<any, any, any, a
 
 export function isService(actor: any): actor is Interpreter<any, any, any, any> {
   return 'state' in actor && 'machine' in actor;
+}
+
+export function isActorWithState<T extends ActorRef<any>>(actorRef: T): actorRef is T & { state: any } {
+  return 'state' in actorRef;
+}
+
+export function defaultGetSnapshot<TEmitted>(actorRef: ActorRef<any, TEmitted>): TEmitted | undefined {
+  return 'getSnapshot' in actorRef
+    ? isService(actorRef)
+      ? getServiceSnapshot(actorRef as any)
+      : actorRef.getSnapshot()
+    : isActorWithState(actorRef)
+    ? (actorRef as any).state
+    : undefined;
 }

@@ -2,11 +2,13 @@ import { AnyStateMachine, EventObject, InterpreterFrom, StateConfig } from 'xsta
 
 export type MaybeLazy<T> = T | (() => T);
 
+export type NoInfer<T> = [T][T extends any ? 0 : any];
+
 export type Prop<T, K> = K extends keyof T ? T[K] : never;
 
 export type SendFrom<TMachine extends AnyStateMachine> = InterpreterFrom<TMachine>['send'];
 
-export interface UseMachineOptions<TContext, TEvent extends EventObject> {
+export interface FromMachineOptions<TContext, TEvent extends EventObject> {
   /**
    * If provided, will be merged with machine's `context`.
    */
