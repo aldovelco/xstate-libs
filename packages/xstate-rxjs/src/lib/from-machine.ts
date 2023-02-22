@@ -28,7 +28,7 @@ export interface FromMachineReturn<TMachine extends AnyStateMachine> {
   state$: Observable<StateFrom<TMachine>>;
   send: Prop<InterpreterFrom<TMachine>, 'send'>;
   service: InterpreterFrom<TMachine>;
-  select: <T>(state: StateFrom<TMachine>) => Observable<T>;
+  select: <T>(selectorFn: (state: StateFrom<TMachine>) => T) => Observable<T>;
 }
 
 export function fromMachine<TMachine extends AnyStateMachine>(
