@@ -1,5 +1,11 @@
 # @aldovelco/xstate-rxjs
 
+## 0.1.0
+
+### Minor Changes
+
+- [#11](https://github.com/aldovelco/xstate-libs/pull/11) [`d3ca9c6`](https://github.com/aldovelco/xstate-libs/commit/d3ca9c6d55526298da98cbbff6667da5584993a8) Thanks [@aldovelco](https://github.com/aldovelco)! - Uses `from` naming convention
+
 ## 0.0.5
 
 ### Patch Changes

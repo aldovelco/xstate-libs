@@ -1,6 +1,6 @@
 {
   "name": "@aldovelco/xstate-rxjs",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "type": "commonjs",
   "peerDependencies": {
     "rxjs": ">=7.x",
