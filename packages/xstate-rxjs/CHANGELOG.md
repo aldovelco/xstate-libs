@@ -1,5 +1,11 @@
 # @aldovelco/xstate-rxjs
 
+## 0.1.1
+
+### Patch Changes
+
+- [#14](https://github.com/aldovelco/xstate-libs/pull/14) [`d8cc62c`](https://github.com/aldovelco/xstate-libs/commit/d8cc62c6d4ea7f7388392d40ab33993ba0dba72c) Thanks [@aldovelco](https://github.com/aldovelco)! - Fixes select function types in fromMachine and fromInterpret
+
 ## 0.1.0
 
 ### Minor Changes
