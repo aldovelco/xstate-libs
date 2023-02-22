@@ -32,7 +32,7 @@ type FromInterpretReturn<TMachine extends AnyStateMachine, TInterpreter = Interp
   state$: Observable<StateFrom<TMachine>>;
   send: Prop<TInterpreter, 'send'>;
   service: TInterpreter;
-  select: <T>(state: StateFrom<TMachine>) => Observable<T>;
+  select: <T>(selectorFn: (state: StateFrom<TMachine>) => T) => Observable<T>;
 };
 
 export function fromInterpret<TMachine extends AnyStateMachine>(
